@@ -1,76 +1,13 @@
-# azure-pipelines.yml
-#
-# CI pipeline for the Alzheimer's Voice Assistant
-#
-# This pipeline:
-#   1. Runs when code is pushed to main
-#   2. Uses Python 3.14.2
-#   3. Installs project dependencies
-#   4. Runs all automated tests
-#   5. Publishes the test results into Azure DevOps
-#
-# Pull Request validation is configured through
-# Azure DevOps Branch Policies, not the "pr:" YAML trigger.
-
 trigger:
   branches:
     include:
       - master
 
 pool:
-  vmImage: default
-
-variables:
-  pythonVersion: "3.14.2"
+  name: 'Default'
 
 steps:
-
-  # -----------------------------------------
-  # 1. Select Python version
-  # -----------------------------------------
-  - task: UsePythonVersion@0
-    displayName: "Use Python $(pythonVersion)"
-    inputs:
-      versionSpec: "$(pythonVersion)"
-      addToPath: true
-
-
-  # -----------------------------------------
-  # 2. Upgrade pip
-  # -----------------------------------------
   - script: |
-      python -m pip install --upgrade pip
-    displayName: "Upgrade pip"
-
-
-  # -----------------------------------------
-  # 3. Install dependencies
-  # -----------------------------------------
-  - script: |
-      pip install -r requirements.txt
-    displayName: "Install dependencies"
-
-
-  # -----------------------------------------
-  # 4. Run automated tests
-  # -----------------------------------------
-  - script: |
-      pytest tests/ \
-        --junitxml=$(Common.TestResultsDirectory)/pytest-results.xml
-    displayName: "Run automated tests"
-
-
-  # -----------------------------------------
-  # 5. Publish test results in Azure DevOps
-  #
-  # Run this even if pytest fails so Azure
-  # can show you exactly which tests failed.
-  # -----------------------------------------
-  - task: PublishTestResults@2
-    displayName: "Publish test results"
-    condition: succeededOrFailed()
-    inputs:
-      testResultsFormat: "JUnit"
-      testResultsFiles: "$(Common.TestResultsDirectory)/pytest-results.xml"
-      testRunTitle: "Python Unit Tests"
-      failTaskOnFailedTests: true
+      echo "Agent is working"
+      python --version
+    displayName: "Test self-hosted agent"
