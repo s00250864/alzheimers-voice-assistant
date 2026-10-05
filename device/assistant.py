@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from device.commands import understand_command
+from device.speech import speak
 
 
 def tell_time() -> str:
@@ -10,14 +11,12 @@ def tell_time() -> str:
 
 
 def find_phone() -> str:
-    # For now this is only simulated.
-    # Later this function will contact our server.
+    # This will eventually contact our FastAPI server.
     return "I am finding your phone."
 
 
 def request_help() -> str:
-    # Do not contact anyone yet.
-    # Eventually this will trigger the emergency-contact workflow.
+    # This will eventually start the emergency-contact workflow.
     return "Do you want me to contact your emergency contact?"
 
 
@@ -37,19 +36,24 @@ def process_command(command: str) -> str:
 
 
 def main():
-    print("Voice Assistant")
+    print("Home Assistant")
     print("Type 'exit' to stop.\n")
 
     while True:
         command = input("You: ")
 
-        if command.lower() == "exit":
-            print("Assistant: Goodbye.")
+        if command.lower().strip() == "exit":
+            response = "Goodbye."
+
+            print(f"Assistant: {response}")
+            speak(response)
+
             break
 
         response = process_command(command)
 
         print(f"Assistant: {response}")
+        speak(response)
 
 
 if __name__ == "__main__":
