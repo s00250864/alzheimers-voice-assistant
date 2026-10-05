@@ -1,18 +1,38 @@
 def understand_command(command: str) -> str:
-    """
-    Takes the user's command and determines what action
-    the assistant should perform.
-    """
-
     command = command.lower().strip()
 
-    if "time" in command:
-        return "TIME"
+    time_phrases = [
+        "time",
+        "what time is it",
+        "tell me the time",
+        "current time",
+        "tell me the time",
+    ]
 
-    if "find my phone" in command:
-        return "FIND_PHONE"
+    phone_phrases = [
+        "find my phone",
+        "find my mobile",
+        "ring my phone",
+        "where is my phone",
+    ]
 
-    if "help me" in command:
-        return "HELP"
+    help_phrases = [
+        "help me",
+        "i need help",
+        "get help",
+        "i need assistance",
+    ]
+
+    for phrase in time_phrases:
+        if phrase in command:
+            return "TIME"
+
+    for phrase in phone_phrases:
+        if phrase in command:
+            return "FIND_PHONE"
+
+    for phrase in help_phrases:
+        if phrase in command:
+            return "HELP"
 
     return "UNKNOWN"
