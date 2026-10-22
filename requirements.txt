@@ -1,2 +1,5 @@
 pytest
 pyttsx3
+faster-whisper
+sounddevice
+scipy
